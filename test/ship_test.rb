@@ -22,9 +22,11 @@ class ShipTest < Minitest::Test
     assert_equal 3, cruiser.length
   end
 
-  
+  def test_it_starts_with_health
+    cruiser = Ship.new("Cruiser", 3)
 
-  # 3 cruiser.health
+    assert_equal 3, cruiser.health
+  end
   #
   # pry(main)> cruiser.sunk?
   # #=> false
