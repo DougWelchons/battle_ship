@@ -13,10 +13,12 @@ class CellTest < Minitest::Test
 
 
 
-# def_test_it_has_a_cell_coordinate
-  #cell = Cell.new("B4")
+# def test_it_has_a_cell_coordinate
+    #cell = Cell.new("B4")
 
-  #assert_equal "B4", cell.coordinate
+    #assert_equal "B4", cell.coordinate
+
+  #end
 
   #pry(main)> cell.ship
   # => nil
