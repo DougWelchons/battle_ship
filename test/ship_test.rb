@@ -16,11 +16,15 @@ class ShipTest < Minitest::Test
     assert_equal "Cruiser", cruiser.name
   end
 
-  #assert_equal 3, cruiser.length
-  #
-  #
-  # pry(main)> cruiser.health
-  # #=> 3
+  def test_it_has_a_length
+    cruiser = Ship.new("Cruiser", 3)
+
+    assert_equal 3, cruiser.length
+  end
+
+  
+
+  # 3 cruiser.health
   #
   # pry(main)> cruiser.sunk?
   # #=> false
