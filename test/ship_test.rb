@@ -34,7 +34,7 @@ class ShipTest < Minitest::Test
     assert_equal false, cruiser.sunk?
   end
 
-  def test_it_has_been_hit_once
+  def test_it_can_be_hit
    cruiser = Ship.new("Cruiser", 3)
 
    cruiser.hit
@@ -43,22 +43,13 @@ class ShipTest < Minitest::Test
    assert_equal 2, cruiser.health
   end
 
-  # def test_it
-  # pry(main)> cruiser.health
-  # #=> 2
-  #
-  # pry(main)> cruiser.hit
-  #
-  # pry(main)> cruiser.health
-  # #=> 1
-  #
-  # pry(main)> cruiser.sunk?
-  # #=> false
-  #
-  # pry(main)> cruiser.hit
-  #
-  # pry(main)> cruiser.sunk?
-  # #=> true
+  def test_it_has_sunk
+    cruiser = Ship.new("Cruiser", 3)
 
+    cruiser.hit
+    cruiser.hit
+    cruiser.hit
 
+    assert_equal true, cruiser.sunk?
+  end
 end
