@@ -11,30 +11,27 @@ class CellTest < Minitest::Test
     assert_instance_of Cell, cell
   end
 
+  def test_it_has_a_cell_coordinate
+    cell = Cell.new("B4")
+
+    assert_equal "B4", cell.coordinate
+  end
+
+  # def test_it_is_empty
+  #   cell = Cell.new("B4")
+  #
+  #   assert_equal nil, cell.ship
+  #   assert_equal true, cell.empty?
+  # end
 
 
-# def test_it_has_a_cell_coordinate
+  # def test_it_contains_a_ship
+    #cruiser = Ship.new("Cruiser", 3)
     #cell = Cell.new("B4")
 
-    #assert_equal "B4", cell.coordinate
+    #cell.place_ship(cruiser)
 
-  #end
-
-  #pry(main)> cell.ship
-  # => nil
-
-  #pry(main)> cell.empty?
-  # => true
-
-  # pry(main)> cruiser = Ship.new("Cruiser", 3)
-  # => #<Ship:0x00007f84f0891238...>
-
-  # pry(main)> cell.place_ship(cruiser)
-
-  # pry(main)> cell.ship
-  # => #<Ship:0x00007f84f0891238...>
-
-  # pry(main)> cell.empty?
-  # => false
-
+    # assert_equal cruiser, cell.ship
+    # assert_equal false cell.empty?
+    #end
 end
