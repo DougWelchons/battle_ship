@@ -1,6 +1,7 @@
 class Cell
   attr_reader :coordinate,
-              :ship
+              :ship,
+              :print_to_screen
 
   def initialize(coordinate)
     @coordinate = coordinate
@@ -32,19 +33,18 @@ class Cell
    @ship.hit if !empty?
    @fired_upon = true
   end
+
+  def sunk?
+    @ship == nil ? false : @ship.sunk?
+  end
+
+  def render(cheat = false)
+    sunk? ? "X" : @print_to_screen[[empty?, fired_upon?, cheat]]
+  end
 end
 
 
 
-
-
-
-
-
-
-#   def render(cheat = false)
-#     sunk? ? "X" : @prent_to_screen[[empty?, fired_upon?, cheat]]
-#   end
 #
 # def render(cheat = false)
 #   if sunk?
