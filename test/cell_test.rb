@@ -59,11 +59,8 @@ class CellTest < Minitest::Test
 
   def test_it_renders_if_it_has_not_been_fired_upon
     cell_1 = Cell.new("B4")
-    cell_2 = Cell.new("C3")
-    # require "pry"; binding.pry
 
     assert_equal ".", cell_1.render
-    assert_equal ".", cell_2.render
   end
 
   def test_it_renders_if_it_has_been_fired_upon_but_does_not_contain_a_ship
@@ -74,34 +71,42 @@ class CellTest < Minitest::Test
     assert_equal "M", cell_1.render
   end
 
-  # def test_it_renders_if_it_has_been_fired_upon_and_contains_a_ship
-    # cell_2 = Cell.new("C3")
+  def test_it_has_been_fired_upon_and_contains_a_ship
+    cruiser = Ship.new("Cruiser", 3)
+    cell_1 = Cell.new("B4")
+    cell_2 = Cell.new("C3")
 
-  # end
+    cell_2.place_ship(cruiser)
 
+    cell_2.fire_upon
 
+    assert_equal "H", cell_2.render
+    assert_equal false, cruiser.sunk?
+  end
 
-  # Indicate that we want to show a ship with the optional argument
-  # cell_1 = Cell.new("B4")#
-  # cell_2 = Cell.new("C3")
-  #
-  # assert_equal "S", cell_2.render(true)
+  def test_it_can_reveal_a_ship_in_the_cell_when_not_fired_upon
+    cruiser = Ship.new("Cruiser", 3)
+    cell_1 = Cell.new("B4")
+    cell_2 = Cell.new("C3")
 
-  # pry(main)> cell_2.fire_upon
+    cell_2.place_ship(cruiser)
 
-  # pry(main)> cell_2.render
-  # => "H"
+    assert_equal "S", cell_2.render(true)
+  end
 
-  # pry(main)> cruiser.sunk?
-  # => false
+  def test_it_has_been_fired_upon_and_ship_has_sunk
+    cruiser = Ship.new("Cruiser", 3)
+    cell_1 = Cell.new("B4")
+    cell_2 = Cell.new("C3")
 
-  # pry(main)> cruiser.hit
+    cell_2.place_ship(cruiser)
 
-  # pry(main)> cruiser.hit
+    cruiser.hit
+    cruiser.hit
 
-  # pry(main)> cruiser.sunk?
-  # => true
+    cell_2.fire_upon
 
-  # pry(main)> cell_2.render
-  # => "X"
+    assert_equal "X", cell_2.render
+    assert_equal true, cruiser.sunk?
+  end
 end
