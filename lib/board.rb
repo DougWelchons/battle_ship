@@ -1,3 +1,5 @@
+require './lib/cell'
+
 class Board
   attr_reader :cells
 
@@ -19,5 +21,9 @@ class Board
               "D3" => Cell.new("D3"),
               "D4" => Cell.new("D4"),
     }
+  end
+
+  def valid_coordinate?(coordinate)
+    @cells[coordinate] != nil
   end
 end
