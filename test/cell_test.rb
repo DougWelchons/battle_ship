@@ -25,13 +25,13 @@ class CellTest < Minitest::Test
   end
 
 
-  # def test_it_contains_a_ship
-    #cruiser = Ship.new("Cruiser", 3)
-    #cell = Cell.new("B4")
+  def test_it_contains_a_ship
+    cruiser = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
 
-    #cell.place_ship(cruiser)
+    cell.place_ship(cruiser)
 
-    # assert_equal cruiser, cell.ship
-    # assert_equal false cell.empty?
-    #end
+    assert_equal cruiser, cell.ship
+    assert_equal false, cell.empty?
+  end
 end
