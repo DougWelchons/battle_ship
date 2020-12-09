@@ -1,7 +1,6 @@
 class Cell
   attr_reader :coordinate,
-              :ship,
-              :print_to_screen
+              :ship
 
   def initialize(coordinate)
     @coordinate = coordinate
@@ -37,7 +36,7 @@ class Cell
   end
 
   def sunk?
-    @ship == nil ? false : @ship.sunk?
+    (@ship == nil) ? false : @ship.sunk?
   end
 
   def render(cheat = false)
