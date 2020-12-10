@@ -27,4 +27,76 @@ class Board
   def valid_coordinate?(coordinate)
     @cells[coordinate] != nil
   end
+
+  def each_coordinate_is_valid(coordinates)
+    coordinates.all? do |coordinate|
+      valid_coordinate?(coordinate)
+    end
+  end
+
+
+  def valid_length?(ship, coordinates)
+    ship.length == coordinates.count
+  end
+
+  def coordinate(coordinates)
+    @split_array = []
+    coordinates.each do |coor|
+      @split_array << coor.split("")
+    end
+  end
+
+  def break_apart
+    @letters = []
+    @numbers = []
+
+    @split_array.each do |coor|
+      @letters << coor[0]
+      @numbers << coor[1]
+    end
+  end
+
+  def is_it_horizontal?
+    horizontal = []
+    @letters.each_cons(2) do |letter1, letter2|
+      horizontal << (letter1 == letter2)
+    end
+    @numbers.each_cons(2) do |num1, num2|
+     horizontal << (num1.to_i + 1 == num2.to_i)
+    end
+    horizontal
+  end
+
+  def is_it_vertical?
+    vertical = []
+   @numbers.each_cons(2) do |num1, num2|
+    vertical << (num1 == num2)
+   end
+   @letters.each_cons(2) do |letter1, letter2|
+    vertical << (letter1.ord + 1 == letter2.ord)
+   end
+   vertical
+  end
+
+  def consecutive?(coordinates)
+    coordinate(coordinates)
+    break_apart
+    if is_it_horizontal? == [true, true] || is_it_horizontal? == [true, true, true, true]
+     true
+    elsif is_it_vertical? == [true, true] || is_it_vertical? == [true, true, true, true]
+     true
+    else
+     false
+    end
+  end
+
+  def valid_placement?(ship, coordinates)
+    if each_coordinate_is_valid(coordinates) &&
+       valid_length?(ship, coordinates) &&
+       consecutive?(coordinates)
+      true
+    else
+      false
+    end
+  end
 end
