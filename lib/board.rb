@@ -21,7 +21,7 @@ class Board
               "D2" => Cell.new("D2"),
               "D3" => Cell.new("D3"),
               "D4" => Cell.new("D4")
-    }
+}
   end
 
   def valid_coordinate?(coordinate)
@@ -34,66 +34,54 @@ class Board
     end
   end
 
-
   def valid_length?(ship, coordinates)
     ship.length == coordinates.count
   end
 
-  def coordinate(coordinates)
-    @split_array = []
-    coordinates.each do |coor|
-      @split_array << coor.split("")
-    end
-  end
-
-  def break_apart
-    @letters = []
-    @numbers = []
-
-    @split_array.each do |coor|
-      @letters << coor[0]
-      @numbers << coor[1]
-    end
-  end
-
-  def is_it_horizontal?
-    horizontal = []
-    @letters.each_cons(2) do |letter1, letter2|
-      horizontal << (letter1 == letter2)
-    end
-    @numbers.each_cons(2) do |num1, num2|
-     horizontal << (num1.to_i + 1 == num2.to_i)
-    end
-    horizontal
-  end
-
-  def is_it_vertical?
-    vertical = []
-   @numbers.each_cons(2) do |num1, num2|
-    vertical << (num1 == num2)
-   end
-   @letters.each_cons(2) do |letter1, letter2|
-    vertical << (letter1.ord + 1 == letter2.ord)
-   end
-   vertical
-  end
-
   def consecutive?(coordinates)
-    coordinate(coordinates)
-    break_apart
-    if is_it_horizontal? == [true, true] || is_it_horizontal? == [true, true, true, true]
+    if is_it_horizontal?(coordinates) == true
      true
-    elsif is_it_vertical? == [true, true] || is_it_vertical? == [true, true, true, true]
+   elsif is_it_vertical?(coordinates) == true
      true
     else
      false
     end
   end
 
+  def is_it_horizontal?(coordinates)
+    horizontal = []
+    coordinates.each_cons(2) do |letter1, letter2|
+      horizontal.push(letter1[0] == letter2[0])
+      horizontal.push(letter1[1].to_i + 1 == letter2[1].to_i)
+    end
+    horizontal.all?
+  end
+
+  def is_it_vertical?(coordinates)
+    vertical = []
+    coordinates.each_cons(2) do |num1, num2|
+      vertical.push(num1[1] == num2[1])
+      vertical.push(num1[0].ord + 1 == num2[0].ord)
+    end
+    vertical.all?
+  end
+
+  def coordinates_empty?(coordinates)
+    coordinates.all? do |coordinate|
+      @cells[coordinate].empty?
+    end
+  end
+
+  def validate(ship, coordinates)
+    return false if each_coordinate_is_valid(coordinates) == false
+    return false if valid_length?(ship, coordinates) == false
+    return false if consecutive?(coordinates) == false
+    return false if coordinates_empty?(coordinates) == false
+    true
+  end
+
   def valid_placement?(ship, coordinates)
-    if each_coordinate_is_valid(coordinates) &&
-       valid_length?(ship, coordinates) &&
-       consecutive?(coordinates)
+    if validate(ship, coordinates) == true
       true
     else
       false
@@ -105,6 +93,8 @@ class Board
       coordinates.each do |coordinate|
         @cells[coordinate].place_ship(ship)
       end
+    else
+      "Sorry, not valid placement"
     end
   end
 end
