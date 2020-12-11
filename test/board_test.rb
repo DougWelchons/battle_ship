@@ -36,21 +36,6 @@ class BoardTest < Minitest::Test
     assert_equal false, board.each_coordinate_is_valid(["B1", "Z1"])
   end
 
-  def test_is_it_horizontal?
-    board = Board.new
-
-    assert_equal true, board.is_it_horizontal?(["A1", "A2", "A3"])
-    assert_equal false, board.is_it_horizontal?(["A1", "B1", "C1"])
-  end
-
-  def test_is_it_vertical?
-    board = Board.new
-
-    assert_equal true, board.is_it_vertical?(["A1", "B1", "C1"])
-    assert_equal false, board.is_it_vertical?(["A1", "A2", "A3"])
-  end
-
-
   def test_it_is_invalid_if_not_the_length_of_the_ship
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -67,6 +52,20 @@ class BoardTest < Minitest::Test
 
     assert_equal true, board.valid_length?(cruiser, ["A1", "A2", "A3"])
     assert_equal true, board.valid_length?(submarine, ["B2", "C2"])
+  end
+
+  def test_is_it_horizontal?
+    board = Board.new
+
+    assert_equal true, board.is_it_horizontal?(["A1", "A2", "A3"])
+    assert_equal false, board.is_it_horizontal?(["A1", "B1", "C1"])
+  end
+
+  def test_is_it_vertical?
+    board = Board.new
+
+    assert_equal true, board.is_it_vertical?(["A1", "B1", "C1"])
+    assert_equal false, board.is_it_vertical?(["A1", "A2", "A3"])
   end
 
   def test_it_is_invalid_if_on_a_diagonal
@@ -116,18 +115,30 @@ class BoardTest < Minitest::Test
     assert_equal cruiser, board.cells["A2"].ship
     assert_equal cruiser, board.cells["A3"].ship
   end
+
+  def test_it_can_have_empty_coordinates
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    assert_equal true, board.coordinates_empty?(["A1", "B1", "C1"])
+
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal false, board.coordinates_empty?(["A1", "B1", "C1"])
+  end
+
+  def test_it_cannot_overlap_coordinates
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal "Sorry, not valid placement", board.place(submarine, ["A2", "B2"])
+  end
 end
 
 
-#
-# def test_it_has_invalid_placements #overlaping
-#   board = Board.new
-#   cruiser = Ship.new("Cruiser", 3)
-#   submarine = Ship.new("Submarine", 2)
-#
-#   assert_equal true, board.valid_placement?(cruiser, ["A1", "A2", "A3"])
-#   assert_equal false, board.valid_placement?(submarine, ["A2", "B2"])
-# end
 #
 # def test_it_has_invalid_placements #partially off of the board
 #   board = Board.new
