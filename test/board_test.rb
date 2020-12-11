@@ -29,6 +29,28 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_coordinate?("C5")
   end
 
+  def test_if_each_coordinate_is_valid
+    board = Board.new
+
+    assert_equal true, board.each_coordinate_is_valid(["A1", "A2", "A3"])
+    assert_equal false, board.each_coordinate_is_valid(["B1", "Z1"])
+  end
+
+  def test_is_it_horizontal?
+    board = Board.new
+
+    assert_equal true, board.is_it_horizontal?(["A1", "A2", "A3"])
+    assert_equal false, board.is_it_horizontal?(["A1", "B1", "C1"])
+  end
+
+  def test_is_it_vertical?
+    board = Board.new
+
+    assert_equal true, board.is_it_vertical?(["A1", "B1", "C1"])
+    assert_equal false, board.is_it_vertical?(["A1", "A2", "A3"])
+  end
+
+
   def test_it_is_invalid_if_not_the_length_of_the_ship
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -95,6 +117,8 @@ class BoardTest < Minitest::Test
     assert_equal cruiser, board.cells["A3"].ship
   end
 end
+
+
 #
 # def test_it_has_invalid_placements #overlaping
 #   board = Board.new
