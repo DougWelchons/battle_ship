@@ -36,10 +36,18 @@ class Cell
   end
 
   def sunk?
-    (@ship == nil) ? false : @ship.sunk?
+    if @ship.nil?
+      false
+    else
+      @ship.sunk?
+    end
   end
 
   def render(cheat = false)
-    sunk? ? "X" : @print_to_screen[[empty?, fired_upon?, cheat]]
+    if sunk? == true
+      "X"
+    else
+      @print_to_screen[[empty?, fired_upon?, cheat]]
+    end
   end
 end
