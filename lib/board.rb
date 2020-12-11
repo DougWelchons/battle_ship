@@ -97,4 +97,26 @@ class Board
       "Sorry, not valid placement"
     end
   end
+
+  def render(cheat = false)
+    evaluate(cheat)
+    print_board
+  end
+
+  def evaluate(cheat)
+    @board = ""
+    @cells.each_value do |value|
+      @board << value.render(cheat)
+      @board << " "
+    end
+    @board
+  end
+
+  def print_board
+    puts "  1 2 3 4 \n" +
+         "A #{@board[0..7]} \n" +
+         "B #{@board[8..15]} \n" +
+         "C #{@board[16..23]} \n" +
+         "D #{@board[24..31]} \n"
+  end
 end
