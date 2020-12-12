@@ -134,18 +134,24 @@ class BoardTest < Minitest::Test
 
     board.place(cruiser, ["A1", "A2", "A3"])
 
-    assert_equal "Sorry, not valid placement", board.place(submarine, ["A2", "B2"])
+    assert_equal "Error: Invalid placement please try again.", board.place(submarine, ["A2", "B2"])
+  end
+
+  def test_it_evaluates_the_board_status
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.place(cruiser, ["A1", "A2", "A3"])
+    board.place(submarine, ["B2", "C2"])
+
+    board.cells["A1"].fire_upon
+    board.cells["A2"].fire_upon
+    board.cells["A3"].fire_upon
+    board.cells["C2"].fire_upon
+    board.cells["D4"].fire_upon
+
+    assert_equal "X X X . . . . . . H . . . . . M ", board.evaluate(false)
+    assert_equal "X X X . . S . . . H . . . . . M ", board.evaluate(true)
   end
 end
-
-
-#
-# def test_it_has_invalid_placements #partially off of the board
-#   board = Board.new
-#   cruiser = Ship.new("Cruiser", 3)
-#   submarine = Ship.new("Submarine", 2)
-#
-#   assert_equal false, board.valid_placement?(cruiser, ["A3", "A4", "A5"])
-#   assert_equal true, board.valid_placement?(submarine, ["B2", "C2"])
-# end
-#
