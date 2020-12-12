@@ -94,7 +94,7 @@ class Board
         @cells[coordinate].place_ship(ship)
       end
     else
-      "Error: Invalid placement please try again."
+      false
     end
   end
 
@@ -118,5 +118,15 @@ class Board
          "B #{@board[8..15]} \n" +
          "C #{@board[16..23]} \n" +
          "D #{@board[24..31]} \n"
+  end
+
+  def valid_target?(target)
+    if valid_coordinate(taregt)
+      @cells[target].fired_upon?
+    end
+  end
+
+  def fire_upon(target)
+    @cells[target].fire_upon
   end
 end
