@@ -94,7 +94,7 @@ class Board
         @cells[coordinate].place_ship(ship)
       end
     else
-      "Sorry, not valid placement"
+      "Error: Invalid placement please try again."
     end
   end
 
@@ -106,8 +106,8 @@ class Board
   def evaluate(cheat)
     @board = ""
     @cells.each_value do |value|
-      @board << value.render(cheat)
-      @board << " "
+      @board += value.render(cheat)
+      @board += " "
     end
     @board
   end

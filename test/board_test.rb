@@ -134,7 +134,7 @@ class BoardTest < Minitest::Test
 
     board.place(cruiser, ["A1", "A2", "A3"])
 
-    assert_equal "Sorry, not valid placement", board.place(submarine, ["A2", "B2"])
+    assert_equal "Error: Invalid placement please try again.", board.place(submarine, ["A2", "B2"])
   end
 
   def test_it_evaluates_the_board_status
