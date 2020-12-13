@@ -1,12 +1,19 @@
 class Computer
   attr_accessor :ships
-  attr_reader :computer_board
+  attr_reader :computer_board,
+              :valid_targets
 
 
   def initialize(computer_board)
     @computer_board = computer_board
     @ships = []
-    @keys = @computer_board.cells.keys
+    @valid_targets = computer_board.cells.keys.shuffle
+  end
+
+  def has_lost?
+    @ships.all? do |ship|
+      ship.sunk?
+    end
   end
 
 ############ PLACE SHIP METHODS ################
@@ -25,7 +32,7 @@ class Computer
   end
 
   def vertical_generator(ship_length)
-    starting_coordinate = @keys.sample
+    starting_coordinate = @computer_board.cells.keys.sample
     coordinates = [starting_coordinate]
     (ship_length - 1).times do
       coordinates << "#{coordinates.last[0].next}#{coordinates.last[1]}"
@@ -34,7 +41,7 @@ class Computer
   end
 
   def horizontal_generator(ship_length)
-    starting_coordinate = @keys.sample
+    starting_coordinate = @computer_board.cells.keys.sample
     coordinates = [starting_coordinate]
     (ship_length-1).times do
       coordinates << "#{coordinates.last[0]}#{coordinates.last[1].to_i + 1}"
@@ -47,12 +54,9 @@ class Computer
 
 
 ########## FIRE AT BOARD METHODS #################
-  def initial_targets
-    @valid_targets = @keys.shuffle
-  end
 
   def target
-    @valid_target.shift
+    @valid_targets.shift
   end
 
 ##################################################
