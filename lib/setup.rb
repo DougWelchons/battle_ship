@@ -2,6 +2,8 @@ require './lib/computer'
 require './lib/player'
 require './lib/board'
 require './lib/ship'
+require './lib/turn'
+
 
 class Setup
   attr_reader :computer,
@@ -73,50 +75,51 @@ class Setup
     turn = Turn.new(@computer, @computer_board, @player, @player_board)
     turn.take_turn
   end
-
-  def intro
-    puts ""
-    puts "-----------------------------------------"
-    puts "          Welcome to BATTLESHIP          "
-    puts "Please enter 'p' to play, or 'q' to quit:"
-    puts "-----------------------------------------"
-    print "> "
-    options
-  end
-
-  def options
-    @player.player_input
-    if @player.input == "Q"
-      puts ""
-      exit_game
-    elsif @player.input == 'P'
-      puts ""
-      the_game
-    else
-      puts "Sorry. Invalid entry. Please type 'p' to play or 'q' to quit:\n"
-      print "> "
-      options
-    end
-  end
-
-  def the_game
-    setup
-    loop do
-      take_turn
-      if computer.has_lost?
-        puts "You won!\n"
-        intro
-        break
-      elsif player.has_lost?
-        puts "I won!\n"
-        intro
-        break
-      end
-    end
-  end
-
-  def exit_game
-    puts "Sorry to see you go. Goodbye!"
-    puts ""
-  end
+############ MAIN MENU ##################
+  # def intro
+  #   puts ""
+  #   puts "-----------------------------------------"
+  #   puts "          Welcome to BATTLESHIP          "
+  #   puts "Please enter 'p' to play, or 'q' to quit:"
+  #   puts "-----------------------------------------"
+  #   print "> "
+  #   options
+  # end
+  #
+  # def options
+  #   @player.player_input
+  #   if @player.input == "Q"
+  #     puts ""
+  #     exit_game
+  #   elsif @player.input == 'P'
+  #     puts ""
+  #     the_game
+  #   else
+  #     puts "Sorry. Invalid entry. Please type 'p' to play or 'q' to quit:\n"
+  #     print "> "
+  #     options
+  #   end
+  # end
+  #
+  # def the_game
+  #   setup
+  #   loop do
+  #     take_turn
+  #     if computer.has_lost?
+  #       puts "You won!\n"
+  #       intro
+  #       break
+  #     elsif player.has_lost?
+  #       puts "I won!\n"
+  #       intro
+  #       break
+  #     end
+  #   end
+  # end
+  #
+  # def exit_game
+  #   puts "Sorry to see you go. Goodbye!"
+  #   puts ""
+  # end
+  ########################################
 end
