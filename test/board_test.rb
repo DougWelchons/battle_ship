@@ -37,7 +37,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_is_invalid_if_not_the_length_of_the_ship
-    board = Board.new
+
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
