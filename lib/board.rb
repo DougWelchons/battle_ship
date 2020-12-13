@@ -121,8 +121,8 @@ class Board
   end
 
   def valid_target?(target)
-    if valid_coordinate(taregt)
-      @cells[target].fired_upon?
+    if valid_coordinate?(target)
+      !@cells[target].fired_upon?
     end
   end
 

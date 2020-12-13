@@ -1,42 +1,43 @@
 class Turn
 
-  def initialize(computer, conputer_board, player, player_board)
+  def initialize(computer, computer_board, player, player_board)
     @computer = computer
     @computer_board = computer_board
     @player = player
-    @player_computer = player_board
+    @player_board = player_board
   end
 
   def render_game_state
-    puts "=============COMPUTER BOARD============="
-    computer_board.render
-    puts "==============PLAYER BOARD=============="
-    player_board.render(true)
+    puts "\n=============COMPUTER BOARD=============\n"
+    @computer_board.render
+    puts "\n==============PLAYER BOARD==============\n"
+    @player_board.render(true)
   end
 
   def player_shoots
-    puts "Enter the coordinate for your shot:"
-    until computer_board.valid_target(player.player_input)
-      #need to trigger a responce for coordinates that have alreay been fired upon
-      puts "Please enter a valid coordinate:"
+    puts "Enter the coordinate for your shot: \n"
+    until @computer_board.valid_target?(validated_input)
+      if @computer_board.valid_coordinate?(@input)
+        puts "You have already fired on this coordinate."
+      end
+        puts "Please enter a valid coordinate: \n"
     end
-      computer_board.fire_upon(player.input)
-      @player_target = player.input
+      @computer_board.fire_upon(@input)
   end
 
   def computer_shoots
-    @computer_target = computer.target
-    player_board.fire_upon(@computer_target)
+    @computer_target = @computer.target
+    @player_board.fire_upon(@computer_target)
   end
 
-  def summry
-    puts "Your shot on #{@player_target} was #{outcome(@computer_board, @player_target)}"
-    puts "My shot on #{@computer_target} was #{outcome(@player_board, @computer_target)}"
+  def summary
+    puts "Your shot on #{@input} #{outcome(@computer_board, @input)}"
+    puts "My shot on #{@computer_target} #{outcome(@player_board, @computer_target)}"
   end
 
   def outcome(board, target)
     if board.cells[target].render == "X"
-      "sunk the #{board.cells[target].ship}."
+      "sunk the #{board.cells[target].ship.name}."
     elsif board.cells[target].render == "H"
       "was a hit."
     else
@@ -48,5 +49,15 @@ class Turn
     render_game_state
     player_shoots
     computer_shoots
-    summry
+    summary
+  end
+end
+
+def validated_input
+  @input = @player.player_input
+  if @input.count == 1
+    @input = @input[0]
+  else
+    "Z29"
+  end
 end

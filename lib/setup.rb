@@ -41,22 +41,23 @@ class Setup
   end
 
   def render_player_board
-    @player.collect_ships
+    # @player.collect_ships
 
-    p "(Computer): I have laid out my ships in the grid."
-    p "You now need to lay out your two ships."
-    p "The Cruiser is three units long and the Submarine is two units long."
+    puts "(Computer): I have laid out my ships in the grid."
+    puts "            You now need to lay out your two ships."
+    puts "            The Cruiser is three units long and the"
+    puts "            Submarine is two units long."
 
     @player_board.render
 
     @player.ships.each do |ship|
 
-      p "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
-      p ">"
+      puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
+      print "> "
 
       while @player_board.place(ship, @player.player_input) == false
-        p "Error: Those are invlaid coordinates. Please try again:"
-        p ">"
+        puts "Error: Those are invlaid coordinates. Please try again:"
+        print "> "
       end
       @player_board.render(true)
     end
@@ -65,7 +66,57 @@ class Setup
   def setup
     give_ships
     computer_place_ships
-    computer_board.render(true)
     render_player_board
+  end
+
+  def take_turn
+    turn = Turn.new(@computer, @computer_board, @player, @player_board)
+    turn.take_turn
+  end
+
+  def intro
+    puts ""
+    puts "-----------------------------------------"
+    puts "          Welcome to BATTLESHIP          "
+    puts "Please enter 'p' to play, or 'q' to quit:"
+    puts "-----------------------------------------"
+    print "> "
+    options
+  end
+
+  def options
+    @player.player_input
+    if @player.input == "Q"
+      puts ""
+      exit_game
+    elsif @player.input == 'P'
+      puts ""
+      the_game
+    else
+      puts "Sorry. Invalid entry. Please type 'p' to play or 'q' to quit:\n"
+      print "> "
+      options
+    end
+  end
+
+  def the_game
+    setup
+    loop do
+      take_turn
+      if computer.has_lost?
+        puts "You won!\n"
+        intro
+        break
+      elsif player.has_lost?
+        puts "I won!\n"
+        intro
+        break
+      end
+    end
+  end
+
+  def exit_game
+    puts "Sorry to see you go. Goodbye!"
+    puts ""
   end
 end
