@@ -1,8 +1,7 @@
 class Player
+  attr_accessor :ships
   attr_reader :name,
-              :input,
-              :sorted_input,
-              :ships
+              :input
 
   def initialize(name)
     @name = name
@@ -11,7 +10,7 @@ class Player
 
   def player_input
     @input = gets.chomp.upcase
-    @sorted_input = @input.split.sort
+    @input.split.sort
   end
 
   def has_lost?
