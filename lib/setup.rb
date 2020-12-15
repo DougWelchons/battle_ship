@@ -6,35 +6,24 @@ require './lib/turn'
 
 
 class Setup
-  attr_reader :computer,
+  attr_reader :ships,
               :player,
-              :computer_board,
-              :player_board,
-              :ships
-
+              :computer
 
   def initialize
     @computer_board = Board.new
     @player_board = Board.new
     @computer = Computer.new(@computer_board)
-    @player = Player.new(@player_board)
-
-  end
-
-  def collect_ships
-    @ships = []
-    @ships << Ship.new("Cruiser", 3)
-    @ships << Ship.new( "Submarine", 2)
+    @player = Player.new("Jason")
   end
 
   def give_ships
-    collect_ships
-    @player.ships = @ships
-    collect_ships
-    @computer.ships = @ships
+    players = [@computer, @player]
+    players.each do |player|
+      @ships = [Ship.new("Cruiser", 3), Ship.new( "Submarine", 2)]
+      player.ships = @ships
+    end
   end
-
-
 
   def computer_place_ships
     @computer.ships.each do |ship|
@@ -42,84 +31,44 @@ class Setup
     end
   end
 
-  def render_player_board
-    # @player.collect_ships
-
+  def prompt_player
     puts "(Computer): I have laid out my ships in the grid."
     puts "            You now need to lay out your two ships."
     puts "            The Cruiser is three units long and the"
     puts "            Submarine is two units long."
+    sleep(2)
+  end
 
-    @player_board.render
-
+  def player_setup
+    prompt_player
     @player.ships.each do |ship|
-
-      puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
-      print "> "
-
-      while @player_board.place(ship, @player.player_input) == false
-        puts "Error: Those are invlaid coordinates. Please try again:"
-        print "> "
-      end
-      @player_board.render(true)
+      render_board(ship)
+      place_ship(ship)
     end
+  end
+
+  def place_ship(ship)
+    while @player_board.place(ship, @player.player_input) == false
+      puts "Error: Those are invlaid coordinates. Please try again:"
+      print "> "
+    end
+  end
+
+  def render_board(ship)
+    puts ""
+    @player_board.render(true)
+    puts "\nEnter the squares for the #{ship.name} (#{ship.length} spaces):"
+    print "> "
   end
 
   def setup
     give_ships
     computer_place_ships
-    render_player_board
+    player_setup
   end
 
   def take_turn
     turn = Turn.new(@computer, @computer_board, @player, @player_board)
     turn.take_turn
   end
-############ MAIN MENU ##################
-  # def intro
-  #   puts ""
-  #   puts "-----------------------------------------"
-  #   puts "          Welcome to BATTLESHIP          "
-  #   puts "Please enter 'p' to play, or 'q' to quit:"
-  #   puts "-----------------------------------------"
-  #   print "> "
-  #   options
-  # end
-  #
-  # def options
-  #   @player.player_input
-  #   if @player.input == "Q"
-  #     puts ""
-  #     exit_game
-  #   elsif @player.input == 'P'
-  #     puts ""
-  #     the_game
-  #   else
-  #     puts "Sorry. Invalid entry. Please type 'p' to play or 'q' to quit:\n"
-  #     print "> "
-  #     options
-  #   end
-  # end
-  #
-  # def the_game
-  #   setup
-  #   loop do
-  #     take_turn
-  #     if computer.has_lost?
-  #       puts "You won!\n"
-  #       intro
-  #       break
-  #     elsif player.has_lost?
-  #       puts "I won!\n"
-  #       intro
-  #       break
-  #     end
-  #   end
-  # end
-  #
-  # def exit_game
-  #   puts "Sorry to see you go. Goodbye!"
-  #   puts ""
-  # end
-  ########################################
 end

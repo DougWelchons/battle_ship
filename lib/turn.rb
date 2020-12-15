@@ -12,6 +12,7 @@ class Turn
     @computer_board.render
     puts "\n==============PLAYER BOARD=============="
     @player_board.render(true)
+    puts ""
   end
 
   def player_shoots
@@ -37,7 +38,9 @@ class Turn
 
   def summary
     puts "Your shot on #{@player.stored_input} #{outcome(@computer_board, @player.stored_input)}"
+    sleep(1)
     puts "My shot on #{@computer.stored_input} #{outcome(@player_board, @computer.stored_input)}"
+    sleep(1)
   end
 
   def outcome(board, target)
