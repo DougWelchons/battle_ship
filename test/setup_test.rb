@@ -12,6 +12,7 @@ class SetupTest < Minitest::Test
   end
 
   def test_it_can_collect_ships
+    skip
     setup = Setup.new
 
     setup.collect_ships
