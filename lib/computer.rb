@@ -1,7 +1,7 @@
 class Computer
   attr_accessor :ships
   attr_reader :computer_board,
-              :valid_targets
+              :stored_input
 
 
   def initialize(computer_board)
@@ -56,7 +56,7 @@ class Computer
 ########## FIRE AT BOARD METHODS #################
 
   def target
-    @valid_targets.shift
+    @stored_input = @valid_targets.shift
   end
 
 ##################################################
