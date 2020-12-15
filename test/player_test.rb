@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/cell'
+require 'mocha/minitest'
 require './lib/ship'
 require './lib/board'
 require './lib/player'
@@ -35,5 +35,13 @@ class PlayerTest < Minitest::Test
     assert_equal true, submarine.sunk?
 
     assert_equal true, player.has_lost?
+  end
+
+  def test_single_coordinate_input
+    player = Player.new("james")
+
+    player.stubs(:player_input).returns(["A1"])
+
+    assert_equal "A1", player.single_coordinate_input
   end
 end
