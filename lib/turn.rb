@@ -8,37 +8,43 @@ class Turn
   end
 
   def render_game_state
-    puts "\n=============COMPUTER BOARD=============\n"
+    puts "\n=============COMPUTER BOARD============="
     @computer_board.render
-    puts "\n==============PLAYER BOARD==============\n"
+    puts "\n==============PLAYER BOARD=============="
     @player_board.render(true)
   end
 
   def player_shoots
-    puts "Enter the coordinate for your shot: \n"
-    until @computer_board.valid_target?(validated_input)
-      if @computer_board.valid_coordinate?(@input)
-        puts "You have already fired on this coordinate."
-      end
-        puts "Please enter a valid coordinate: \n"
+    puts "Enter the coordinate for your shot: "
+    print "> "
+    until @computer_board.valid_target?(@player.single_coordinate_input)
+      error_message
     end
-      @computer_board.fire_upon(@input)
+      @computer_board.fire_upon(@player.stored_input)
+  end
+
+  def error_message
+    if @computer_board.valid_coordinate?(@player.stored_input)
+      puts "You have already fired on this coordinate."
+    end
+    puts "Please enter a valid coordinate: "
+    print "> "
   end
 
   def computer_shoots
-    @computer_target = @computer.target
-    @player_board.fire_upon(@computer_target)
+    @player_board.fire_upon(@computer.target)
   end
 
   def summary
-    puts "Your shot on #{@input} #{outcome(@computer_board, @input)}"
-    puts "My shot on #{@computer_target} #{outcome(@player_board, @computer_target)}"
+    puts "Your shot on #{@player.stored_input} #{outcome(@computer_board, @player.stored_input)}"
+    puts "My shot on #{@computer.stored_input} #{outcome(@player_board, @computer.stored_input)}"
   end
 
   def outcome(board, target)
-    if board.cells[target].render == "X"
-      "sunk the #{board.cells[target].ship.name}."
-    elsif board.cells[target].render == "H"
+    targeted_cell = board.cells[target]
+    if targeted_cell.render == "X"
+      "sunk the #{targeted_cell.ship.name}."
+    elsif targeted_cell.render == "H"
       "was a hit."
     else
       "was a miss."
@@ -50,14 +56,5 @@ class Turn
     player_shoots
     computer_shoots
     summary
-  end
-end
-
-def validated_input
-  @input = @player.player_input
-  if @input.count == 1
-    @input = @input[0]
-  else
-    "Z29"
   end
 end
