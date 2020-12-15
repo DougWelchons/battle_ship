@@ -11,15 +11,6 @@ class SetupTest < Minitest::Test
     assert_instance_of Setup, setup
   end
 
-  def test_it_can_collect_ships
-    skip
-    setup = Setup.new
-
-    setup.collect_ships
-
-    assert_equal 2, setup.ships.count
-  end
-
   def test_it_can_give_ships_to_the_computer_and_player
     setup = Setup.new
 
