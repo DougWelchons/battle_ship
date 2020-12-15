@@ -19,10 +19,10 @@ class MainMenu
 
   def options
     @player.player_input
-    if @player.input == "Q"
+    if @player.stored_input == "Q"
       puts ""
       exit_game
-    elsif @player.input == 'P'
+    elsif @player.stored_input == 'P'
       puts ""
       the_game
     else

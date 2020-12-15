@@ -9,8 +9,8 @@ class Player
   end
 
   def player_input
-    input = gets.chomp.upcase
-    input.split.sort
+    @stored_input = gets.chomp.upcase
+    @stored_input.split.sort
   end
 
   def single_coordinate_input
