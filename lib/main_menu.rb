@@ -11,9 +11,10 @@ class MainMenu
     puts ""
     puts "-----------------------------------------"
     puts "          Welcome to BATTLESHIP          "
-    puts "Please enter 'p' to play, or 'q' to quit:"
+    puts "Please enter 'p' to play or 'q' to quit: "
     puts "-----------------------------------------"
     print "> "
+
     options
   end
 
@@ -24,7 +25,7 @@ class MainMenu
       exit_game
     elsif @player.stored_input == 'P'
       puts ""
-      the_game
+      play_game
     else
       puts "Sorry. Invalid entry. Please type 'p' to play or 'q' to quit:\n"
       print "> "
@@ -32,13 +33,14 @@ class MainMenu
     end
   end
 
-  def the_game
+  def play_game
     game = Setup.new(@player)
     game.setup
     loop do
       game.take_turn
       if game.computer.has_lost?
         puts "You won!\n"
+        intro
         break
       elsif game.player.has_lost?
         puts "I won!\n"
