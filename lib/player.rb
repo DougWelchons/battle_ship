@@ -1,7 +1,7 @@
 class Player
-  attr_accessor :ships
-  attr_reader   :name,
-                :stored_input
+  attr_reader :ships,
+              :name,
+              :stored_input
 
   def initialize(name)
     @name = name
@@ -20,6 +20,10 @@ class Player
     else
       "Z29"
     end
+  end
+
+  def add_ships(ships)
+    @ships = ships
   end
 
   def has_lost?

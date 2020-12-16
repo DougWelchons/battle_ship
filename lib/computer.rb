@@ -1,13 +1,16 @@
 class Computer
-  attr_accessor :ships
   attr_reader :computer_board,
-              :stored_input
-
+              :stored_input,
+              :ships
 
   def initialize(computer_board)
     @computer_board = computer_board
     @ships = []
     @valid_targets = computer_board.cells.keys.shuffle
+  end
+
+  def add_ships(ships)
+    @ships = ships
   end
 
   def has_lost?
@@ -16,7 +19,6 @@ class Computer
     end
   end
 
-############ PLACE SHIP METHODS ################
   def place_ship(ship, ship_length)
     while @computer_board.place(ship, generator(ship_length)) == false
     end
@@ -49,15 +51,7 @@ class Computer
     coordinates
   end
 
-
-##################################################
-
-
-########## FIRE AT BOARD METHODS #################
-
   def target
     @stored_input = @valid_targets.shift
   end
-
-##################################################
 end
