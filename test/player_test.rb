@@ -37,11 +37,20 @@ class PlayerTest < Minitest::Test
     assert_equal true, player.has_lost?
   end
 
-  def test_single_coordinate_input
+  def test_single_coordinate_input_invalid
+    player = Player.new("james")
+
+    player.stubs(:player_input).returns(["A1", "A2"])
+
+    assert_equal "Z29", player.single_coordinate_input
+  end
+
+  def test_single_coordinate_input_valid
     player = Player.new("james")
 
     player.stubs(:player_input).returns(["A1"])
 
     assert_equal "A1", player.single_coordinate_input
+    assert_equal "A1", player.stored_input
   end
 end
