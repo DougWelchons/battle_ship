@@ -1,4 +1,3 @@
-
 require './lib/cell'
 
 class Board
@@ -22,31 +21,27 @@ class Board
               "D2" => Cell.new("D2"),
               "D3" => Cell.new("D3"),
               "D4" => Cell.new("D4")
-}
+             }
   end
 
   def valid_coordinate?(coordinate)
     @cells[coordinate] != nil
   end
 
-  def each_coordinate_is_valid(coordinates)
+  def all_coordinates_are_valid?(coordinates)
     coordinates.all? do |coordinate|
       valid_coordinate?(coordinate)
     end
   end
 
-  def valid_length?(ship, coordinates)
+  def coordinates_equal_to_ship_length?(ship, coordinates)
     ship.length == coordinates.count
   end
 
-  def consecutive?(coordinates)
-    if is_it_horizontal?(coordinates) == true
-     true
-   elsif is_it_vertical?(coordinates) == true
-     true
-    else
-     false
-    end
+  def all_coordinates_are_consecutive?(coordinates)
+    return true if is_it_horizontal?(coordinates) == true
+    return true if is_it_vertical?(coordinates) == true
+    false
   end
 
   def is_it_horizontal?(coordinates)
@@ -67,26 +62,18 @@ class Board
     vertical.all?
   end
 
-  def coordinates_empty?(coordinates)
+  def coordinates_are_empty?(coordinates)
     coordinates.all? do |coordinate|
       @cells[coordinate].empty?
     end
   end
 
-  def validate(ship, coordinates)
-    return false if each_coordinate_is_valid(coordinates) == false
-    return false if valid_length?(ship, coordinates) == false
-    return false if consecutive?(coordinates) == false
-    return false if coordinates_empty?(coordinates) == false
-    true
-  end
-
   def valid_placement?(ship, coordinates)
-    if validate(ship, coordinates) == true
-      true
-    else
-      false
-    end
+    return false if all_coordinates_are_valid?(coordinates) == false
+    return false if coordinates_equal_to_ship_length?(ship, coordinates) == false
+    return false if all_coordinates_are_consecutive?(coordinates) == false
+    return false if coordinates_are_empty?(coordinates) == false
+    true
   end
 
   def place(ship, coordinates)
@@ -99,15 +86,15 @@ class Board
     end
   end
 
-  def render(cheat = false)
-    evaluate(cheat)
+  def render(reveal = false)
+    evaluate(reveal)
     print_board
   end
 
-  def evaluate(cheat)
+  def evaluate(reveal)
     @board = ""
     @cells.each_value do |value|
-      @board += value.render(cheat)
+      @board += value.render(reveal)
       @board += " "
     end
     @board

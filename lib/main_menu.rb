@@ -4,7 +4,7 @@ require './lib/setup'
 class MainMenu
 
   def initialize
-    @player = Player.new("player")
+    @player = Player.new("Bob Gu")
   end
 
   def intro
@@ -33,13 +33,12 @@ class MainMenu
   end
 
   def the_game
-    game = Setup.new
+    game = Setup.new(@player)
     game.setup
     loop do
       game.take_turn
       if game.computer.has_lost?
         puts "You won!\n"
-        intro
         break
       elsif game.player.has_lost?
         puts "I won!\n"

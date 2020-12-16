@@ -10,18 +10,18 @@ class Setup
               :player,
               :computer
 
-  def initialize
+  def initialize(player)
     @computer_board = Board.new
     @player_board = Board.new
     @computer = Computer.new(@computer_board)
-    @player = Player.new("Jason")
+    @player = player
   end
 
   def give_ships
     players = [@computer, @player]
     players.each do |player|
-      @ships = [Ship.new("Cruiser", 3), Ship.new( "Submarine", 2)]
-      player.ships = @ships
+      ships = [Ship.new("Cruiser", 3), Ship.new( "Submarine", 2)]
+      player.add_ships(ships)
     end
   end
 
