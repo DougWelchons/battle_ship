@@ -46,18 +46,22 @@ class Board
 
   def is_it_horizontal?(coordinates)
     horizontal = []
-    coordinates.each_cons(2) do |letter1, letter2|
-      horizontal.push(letter1[0] == letter2[0])
-      horizontal.push(letter1[1].to_i + 1 == letter2[1].to_i)
+    coordinates.each_cons(2) do |coordinate1, coordinate2|
+      horizontal.push(
+                      (coordinate1[0] == coordinate2[0]),
+                      (coordinate1[1].to_i + 1 == coordinate2[1].to_i)
+                    )
     end
     horizontal.all?
   end
 
   def is_it_vertical?(coordinates)
     vertical = []
-    coordinates.each_cons(2) do |num1, num2|
-      vertical.push(num1[1] == num2[1])
-      vertical.push(num1[0].ord + 1 == num2[0].ord)
+    coordinates.each_cons(2) do |coordinate1, coordinate2|
+      vertical.push(
+                    (coordinate1[1] == coordinate2[1]),
+                    (coordinate1[0].ord + 1 == coordinate2[0].ord)
+                   )
     end
     vertical.all?
   end
