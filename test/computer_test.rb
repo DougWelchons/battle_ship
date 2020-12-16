@@ -8,7 +8,7 @@ require './lib/computer'
 
 class ComputerTest < Minitest::Test
 
-  def test_it_exits
+  def test_it_exists
     computer_board = Board.new
     computer = Computer.new(computer_board)
 
@@ -20,16 +20,6 @@ class ComputerTest < Minitest::Test
     computer = Computer.new(computer_board)
 
     assert_equal [], computer.ships
-  end
-
-  def test_it_has_a_ship_placed_on_the_computer_board
-    computer_board = Board.new
-    computer = Computer.new(computer_board)
-    cruiser = Ship.new("Cruiser", 3)
-
-    computer.place_ship(cruiser, 3)
-
-    assert_equal 3, computer.computer_board.evaluate(true).scan(/S/).count
   end
 
   def test_if_computer_has_lost_the_game
@@ -57,7 +47,17 @@ class ComputerTest < Minitest::Test
     assert_equal true, computer.has_lost?
   end
 
-  def test_it_can_remove_a_valid_targets_when_its_shot_at
+  def test_it_has_a_ship_placed_on_the_computer_board
+    computer_board = Board.new
+    computer = Computer.new(computer_board)
+    cruiser = Ship.new("Cruiser", 3)
+
+    computer.place_ship(cruiser, 3)
+
+    assert_equal 3, computer.computer_board.evaluate(true).scan(/S/).count
+  end
+
+  def test_it_can_remove_a_valid_target_when_its_shot_at
     computer_board = Board.new
     computer = Computer.new(computer_board)
 
