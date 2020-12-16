@@ -14,7 +14,6 @@ class TurnTest < Minitest::Test
     player_board = Board.new
     computer = Computer.new(computer_board)
     player = Player.new(player_board)
-    board = Board.new
     turn = Turn.new(computer, computer_board, player, player_board)
 
     assert_instance_of Turn, turn
