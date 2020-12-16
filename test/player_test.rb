@@ -8,13 +8,13 @@ require './lib/player'
 class PlayerTest < Minitest::Test
 
   def test_it_exists
-    player = Player.new("Sara")
+    player = Player.new("Megan McMahon")
 
     assert_instance_of Player, player
   end
 
   def test_if_player_has_lost_the_game
-    player = Player.new("Sara")
+    player = Player.new("Mike Dao")
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
@@ -38,7 +38,7 @@ class PlayerTest < Minitest::Test
   end
 
   def test_single_coordinate_input_invalid
-    player = Player.new("james")
+    player = Player.new("Bob Gu")
 
     player.stubs(:player_input).returns(["A1", "A2"])
 
@@ -46,7 +46,7 @@ class PlayerTest < Minitest::Test
   end
 
   def test_single_coordinate_input_valid
-    player = Player.new("james")
+    player = Player.new("Megan McMahon")
 
     player.stubs(:player_input).returns(["A1"])
 
